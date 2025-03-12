@@ -5,7 +5,7 @@ The **Racquetball Score Parser** is a Python script that reads a match record fr
 
 ---
 
-## 🛠 How to Use
+## How to Use
 
 ### **1️ Prepare the Input File**
 Create a text file with match data, where each player's name is followed by their score. Example:
