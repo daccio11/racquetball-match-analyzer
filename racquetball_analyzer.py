@@ -1,41 +1,55 @@
+import re
 
-from itertools import combinations
-# source for intertools: https://stackoverflow.com/questions/8371887/making-all-possible-combinations-of-a-list
+# Open the input file for reading, prompting the user for the filename
+inputfile = open(input("Enter file name:"), "r")
 
-def fair(problemDifficulties):
-    difficulties = sorted(problemDifficulties)
-    for i in range(2, len(difficulties)):
-        if difficulties[i] > difficulties[i - 1] + difficulties[i - 2]:
-            return False
-    return True
+# Initialize empty lists and variables
+names = []  # List to store extracted characters
+names2 = ''  # String to store formatted names with spaces
+scores = []  # List to store extracted name-score pairs
+user1Score = 0  # Total score for first detected player
+user2Score = 0  # Total score for second detected player
 
-def countFair(difficulties, numProblems):
-    problem = list(combinations(difficulties, numProblems))
+# Read the first line of the file and store it as a string
+stringPlayer = str(inputfile.readline())
 
-    fairCount = sum(fair(problem) for problem in problem)
+# Iterate over each character in the string
+for char in stringPlayer:
+    names.append(char)  # Append character to names list
 
-    return fairCount
+    # If the character is '1' or '2', insert a space to separate names from scores
+    if char == '1' or char == '2':
+        names.append(" ")
 
-def validInput(n, k, problemDiff):
-    if not (3 <= n <= 50):
-        return False
-    if not (3 <= k <= 18):
-        return False
-    if k >= n:
-        return False
-    for num in problemDiff:
-        if num < 1 or num > 109:
-            return False
-    return True
+# Convert list back to a string
+for char in names:
+    names2 += char
 
-input = input("Enter file name: ")
+# Split the formatted string into a list of names and scores
+names3 = names2.split()
 
-with open(input, 'r') as file:
-    n, k = map(int, file.readline().split())
-    problemDiff = [int(file.readline()) for _ in range(n)]
+# Use regex to extract names and associated scores
+for i in names3:
+    match = re.match(r"([a-z]+)([0-9]+)", i, re.I)  # Match name (letters) and score (digits)
+    if match:
+        items = match.groups()  # Extract matched groups (name, score)
+        scores.append(items)  # Append extracted data to scores list
 
-    if validInput(n, k, problemDiff):
-        result = countFair(problemDiff, k)
-        print(result)
-    else:
-        print("Invalid input numbers.")
+# Identify players based on first detected names in the score list
+user1 = scores[0][0]  # First player's name
+for n in scores:
+    if n[0] != user1:
+        user2 = n[0]  # Identify second player
+
+# Calculate total scores for each player
+for n in scores:
+    if n[0] == user1:
+        user1Score += int(n[1])
+    if n[0] == user2:
+        user2Score += int(n[1])
+
+# Determine and print the winner
+if user1Score > user2Score:
+    print(f"{user1} wins with {user1Score} points!")
+if user2Score > user1Score:
+    print(f"{user2} wins with {user2Score} points!")
