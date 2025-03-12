@@ -1,0 +1,38 @@
+# User Guide: Racquetball Score Parser
+
+## Introduction
+The **Racquetball Score Parser** is a Python script that reads a match record from a file, extracts player names and scores, calculates total scores, and determines the winner.
+
+---
+
+## 🛠 How to Use
+
+### **1️ Prepare the Input File**
+Create a text file with match data, where each player's name is followed by their score. Example:
+```
+ben2ben1ben2abby2abby2ben1abby1ben2abby2
+```
+
+### **2️ Run the Script**
+1. Open a terminal or command prompt.
+2. Navigate to the script’s folder.
+3. Run the command:
+   ```bash
+   python racquetball_score_parser.py
+   ```
+
+### **3️ Enter the File Name**
+When prompted, type the name of the file:
+```
+Enter file name: match_results.txt
+```
+
+### **4️ View the Results**
+The script will calculate the scores and display the winner:
+```
+abby wins with 8 points!
+```
+
+---
+
+🎉 **That's it!** Enjoy tracking your racquetball matches!
